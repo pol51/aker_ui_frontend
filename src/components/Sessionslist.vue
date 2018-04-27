@@ -38,7 +38,7 @@ export default {
       this.$http.get('http://192.168.13.45:8888/session')
         .then(response => {
           console.log(response.data)
-          this.sessions = Array(20).fill(response.body[0])
+          this.sessions = response.body
         }, response => {
           console.log(response.data)
         })
