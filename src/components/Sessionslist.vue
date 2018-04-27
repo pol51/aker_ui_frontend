@@ -1,6 +1,12 @@
 <template>
   <div class="sessionlist">
     <el-main>
+      <el-input
+        prefix-icon="el-icon-search"
+        placeholder="Search"
+        v-model="filter"
+        clearable>
+      </el-input>
       <el-table :data="sessions" stripe border>
         <el-table-column prop="uuid" label="Uuid" />
         <el-table-column label="User@Host">
@@ -30,12 +36,19 @@ export default {
   props: ['source'],
   data () {
     return {
-      sessions: []
+      sessions: [],
+      filter: ''
     }
   },
   methods: {
     updateSource: function (source) {
-      this.$http.get('http://192.168.13.45:8888/session')
+      var uri
+      if (this.filter) {
+        uri = 'http://192.168.13.45:8888/session?where=' + this.filter
+      } else {
+        uri = 'http://192.168.13.45:8888/session'
+      }
+      this.$http.get(uri)
         .then(response => {
           console.log(response.data)
           this.sessions = response.body
@@ -48,7 +61,7 @@ export default {
     this.updateSource(this.source)
   },
   watch: {
-    source: function (val) {
+    filter: function (val) {
       this.updateSource(val)
     }
   }
