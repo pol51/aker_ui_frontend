@@ -18,7 +18,8 @@
     "moment": "^2.22.1",
     "moment-duration-format": "^2.2.2",
     "vue": "^2.5.16",
-    "vue-resource": "^1.5.0"
+    "vue-resource": "^1.5.0",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -40,6 +41,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
+    "element-pagination": "^2.0.0",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",

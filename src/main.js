@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
+import ElPagination from 'element-pagination'
+import VueRouter from 'vue-router'
 
 var moment = require('moment')
 var momentDurationFormatSetup = require('moment-duration-format')
@@ -25,6 +27,9 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(ElementUI)
+Vue.use(VueRouter)
+
+Vue.component('el-pagination', ElPagination)
 
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
