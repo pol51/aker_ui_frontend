@@ -14,7 +14,7 @@
         @sort-change="handleSortChange">
         <el-table-column label="Uuid" sortable>
           <template slot-scope="scope">
-            <router-link to="/session">{{ scope.row.uuid}}</router-link>
+            <router-link :to="{name:'session', params: { session: scope.row.uuid }}" exact>{{ scope.row.uuid}}</router-link>
           </template>
         </el-table-column>
         <el-table-column label="User@Host">
@@ -32,12 +32,18 @@
             <span>{{ scope.row.end | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Duration" sortable>
+        <el-table-column label="Duration">
           <template slot-scope="scope">
             <span>{{ scope.row.duration | formatDuration }}</span>
           </template>
         </el-table-column>
-
+        <el-table-column label="Play" width="50" align="center">
+          <template slot-scope="scope">
+            <router-link :to="{name:'session-term', params: { session: scope.row.uuid }}" exact>
+              <i class="el-icon-caret-right"/>
+            </router-link>
+          </template>
+        </el-table-column>
       </el-table>
     </el-main>
     <el-footer style="text-align: center">
@@ -69,7 +75,7 @@ export default {
   },
   methods: {
     updateSource: function () {
-      let uri = `http://192.168.13.45:8888/session?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
+      let uri = `${this.baseUrl}/session?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
       if (this.filter) {
         uri += `&where=${encodeURI(this.filter)}`
       }

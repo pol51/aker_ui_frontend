@@ -33,6 +33,16 @@ Vue.component('el-pagination', ElPagination)
 
 Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
+Vue.mixin({
+  data: function () {
+    return {
+      get baseUrl () {
+        return 'http://192.168.13.45:8888'
+      }
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

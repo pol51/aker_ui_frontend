@@ -41,7 +41,6 @@ export default {
     return {
       commands: [],
       cmd_filter: '',
-      session: '0060bba3-e777-4197-8dc2-c8d8e8e23a42',
       page_size: 15,
       total: 0,
       current_page: 1,
@@ -50,23 +49,13 @@ export default {
   },
   methods: {
     updateSource: function () {
-      let uri = `http://192.168.13.45:8888/command?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
-      let filter = null
-      if (this.session) {
-        if (!filter) {
-          filter = {}
-        }
-        filter['session'] = this.session
-      }
+      let uri = `${this.baseUrl}/command?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
+      let filter = {}
+      filter['session'] = this.$route.params['session']
       if (this.cmd_filter) {
-        if (!filter) {
-          filter = {}
-        }
-        filter['cmd'] = this.cmd_filter
+        filter['cmd'] = {'$icontains': this.cmd_filter}
       }
-      if (filter) {
-        uri += `&where=${encodeURI(JSON.stringify(filter))}`
-      }
+      uri += `&where=${encodeURI(JSON.stringify(filter))}`
       this.$http.get(uri)
         .then(response => {
           this.commands = response.body
