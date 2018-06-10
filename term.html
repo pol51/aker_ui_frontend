@@ -18,7 +18,7 @@
         function sleep(ms) {
           return new Promise(resolve => setTimeout(resolve, ms));
         }
-        
+
         async function demo() {
           term.write('Hello from \033[1;3;31mxterm.js\033[0m $ ')
           for (i = 0; i < 200; i++) {
@@ -26,26 +26,27 @@
             term.write('.');
           }
         }
-        
+
         Terminal.applyAddon(fit);
-        var term = new Terminal({cols: 120, rows: 50});
-        
+        let term = new Terminal({cols: 120, rows: 50});
+
         term.open(document.getElementById('terminal'));
         term.fit();
-        
-        var reader = new FileReader();
+
+        let reader = new FileReader();
         reader.onload = function(event) {
-          var contents = event.target.result;
+          let contents = event.target.result;
+          term.clear();
           term.write(contents);
         };
 
         reader.onerror = function(event) {
           console.error("File could not be read! Code " + event.target.error.code);
         };
-        
-        var control = document.getElementById("logfile");
+
+        let control = document.getElementById("logfile");
         control.addEventListener("change", function(event) {
-          var i = 0,
+          let i = 0,
           files = control.files,
           len = files.length;
 
@@ -53,9 +54,9 @@
             reader.readAsText(files[i]);
           }
         }, false);
-        
+
         //demo1();
       </script>
     </body>
   </html>
-  
+

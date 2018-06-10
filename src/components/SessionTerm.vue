@@ -1,18 +1,19 @@
 <template>
-  <div id="app">
+  <div class="sessionterm">
     <div id="terminal"></div>
   </div>
 </template>
 <script>
 import { Terminal } from 'xterm'
+import * as fit from 'xterm/lib/addons/fit/fit'
+Terminal.applyAddon(fit)
 
 export default {
-  name: 'sessionTerm',
-
+  name: 'sessionterm',
   data () {
     return {
       session_log: null,
-      term: null
+      term: new Terminal({cols: 120, rows: 50})
     }
   },
   methods: {
@@ -20,18 +21,16 @@ export default {
       const uri = `${this.baseUrl}/session/log?session_uuid=${this.$route.params['session']}`
       this.$http.get(uri)
         .then(response => {
-          this.session_log = response.body
-
-          this.term.clear()
-          this.term.write(atob(this.session_log))
+          this.session_log = atob(response.body)
+          this.term.open(document.getElementById('terminal'))
+          this.term.fit()
+          this.term.write(this.session_log)
         }, response => {
           console.log(response.data)
         })
     }
   },
-  created: function () {
-    this.term = new Terminal({cols: 120, rows: 50})
-    this.term.open(document.getElementById('terminal'))
+  mounted () {
     this.updateSource()
   }
 }
