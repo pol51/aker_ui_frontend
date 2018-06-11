@@ -6,6 +6,7 @@ import VueResource from 'vue-resource'
 import ElementUI from 'element-ui'
 import ElPagination from 'element-pagination'
 import VueRouter from 'vue-router'
+import VueTerm from 'vue-term'
 
 var moment = require('moment')
 var momentDurationFormatSetup = require('moment-duration-format')
@@ -28,6 +29,7 @@ Vue.config.productionTip = false
 Vue.use(VueResource)
 Vue.use(ElementUI)
 Vue.use(VueRouter)
+Vue.use(VueTerm)
 
 Vue.component('el-pagination', ElPagination)
 
