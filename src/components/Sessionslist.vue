@@ -48,11 +48,13 @@
     </el-main>
     <el-footer style="text-align: center">
       <el-pagination
+        @size-change="handleSizeChange"
         @current-change="handlePaginatorSelectPage"
-        :page-size="page_size"
+        :page-sizes="[10, 15, 20, 50, 100]"
+        :page-size="15"
         :total="total"
-        :current-page="current_page"
-        layout="prev, pager, next"
+        :current-page.sync="current_page"
+        layout="sizes, prev, pager, next"
         >
       </el-pagination>
     </el-footer>
@@ -67,9 +69,9 @@ export default {
     return {
       sessions: [],
       filter: '',
-      page_size: 15,
       total: 0,
       current_page: 1,
+      page_size: 15,
       sort: {}
     }
   },
@@ -97,6 +99,15 @@ export default {
         this.sort[sort.column.label.toLowerCase()] = sort.column.order === 'ascending'
       } catch (e) {
       }
+      this.updateSource()
+    },
+    handleSizeChange: function (size) {
+      let currentItem = (this.current_page - 1) * this.page_size
+      this.page_size = size
+      console.log(`current page: ${this.current_page}`)
+      this.current_page = Math.floor(currentItem / size) + 1
+      console.log(`current item: ${currentItem}`)
+      console.log(`size: ${size}`)
       this.updateSource()
     }
   },
