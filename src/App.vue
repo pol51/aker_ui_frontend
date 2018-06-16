@@ -4,11 +4,11 @@
   </div>
 </template>
 <script>
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 
-import Sessionslist from './components/Sessionslist'
-import Commandslist from './components/Commandslist'
-import SessionTerm from './components/SessionTerm'
+import Sessionslist from './components/Sessionslist';
+import Commandslist from './components/Commandslist';
+import SessionTerm from './components/SessionTerm';
 
 const router = new VueRouter({
   mode: 'history',
@@ -18,12 +18,12 @@ const router = new VueRouter({
     { path: '/session', name: 'session', component: Commandslist },
     { path: '/session-term', name: 'session-term', component: SessionTerm }
   ]
-})
+});
 
 export default {
   router,
   name: 'app'
-}
+};
 </script>
 
 <style>

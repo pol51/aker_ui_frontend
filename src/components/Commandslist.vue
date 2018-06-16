@@ -45,49 +45,45 @@ export default {
       total: 0,
       current_page: 1,
       sort: {'timing': false}
-    }
+    };
   },
   methods: {
     updateSource: function () {
-      let uri = `${this.baseUrl}/command?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
-      let filter = {}
-      filter['session'] = this.$route.params['session']
+      let uri = `${this.baseUrl}/command?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`;
+      let filter = {};
+      filter['session'] = this.$route.params['session'];
       if (this.cmd_filter) {
-        filter['cmd'] = {'$icontains': this.cmd_filter}
+        filter['cmd'] = {'$icontains': this.cmd_filter};
       }
-      uri += `&where=${encodeURI(JSON.stringify(filter))}`
+      uri += `&where=${encodeURI(JSON.stringify(filter))}`;
       this.$http.get(uri)
         .then(response => {
-          this.commands = response.body
-          this.total = parseInt(response.headers.get('X-Total-Count'))
+          this.commands = response.body;
+          this.total = parseInt(response.headers.get('X-Total-Count'));
         }, response => {
-          console.log(response.data)
-        })
+          console.log(response.data);
+        });
     },
     handlePaginatorSelectPage: function (currentPage) {
-      this.current_page = currentPage
-      this.updateSource()
+      this.current_page = currentPage;
+      this.updateSource();
     },
     handleSortChange: function (sort) {
-      this.sort = {}
+      this.sort = {};
       try {
-        this.sort[sort.column.label.toLowerCase()] = sort.column.order === 'ascending'
+        this.sort[sort.column.label.toLowerCase()] = sort.column.order === 'ascending';
       } catch (e) {
       }
-      this.updateSource()
+      this.updateSource();
     }
   },
   created: function () {
-    this.updateSource()
+    this.updateSource();
   },
   watch: {
     cmd_filter: function () {
-      this.updateSource()
+      this.updateSource();
     }
   }
-}
+};
 </script>
-
-<style scoped>
-@import url("//unpkg.com/element-ui@2.3.5/lib/theme-chalk/index.css");
-</style>

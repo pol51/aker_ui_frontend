@@ -54,7 +54,7 @@
         :page-size="15"
         :total="total"
         :current-page.sync="current_page"
-        layout="sizes, prev, pager, next"
+        layout="total, sizes, prev, pager, next"
         >
       </el-pagination>
     </el-footer>
@@ -73,55 +73,51 @@ export default {
       current_page: 1,
       page_size: 15,
       sort: {}
-    }
+    };
   },
   methods: {
     updateSource: function () {
-      let uri = `${this.baseUrl}/session?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`
+      let uri = `${this.baseUrl}/session?page=${this.current_page}&per_page=${this.page_size}&sort=${encodeURI(JSON.stringify(this.sort))}`;
       if (this.filter) {
-        uri += `&where=${encodeURI(this.filter)}`
+        uri += `&where=${encodeURI(this.filter)}`;
       }
       this.$http.get(uri)
         .then(response => {
-          this.sessions = response.body
-          this.total = parseInt(response.headers.get('X-Total-Count'))
+          this.sessions = response.body;
+          this.total = parseInt(response.headers.get('X-Total-Count'));
         }, response => {
-          console.log(response.data)
-        })
+          console.log(response.data);
+        });
     },
     handlePaginatorSelectPage: function (currentPage) {
-      this.current_page = currentPage
-      this.updateSource()
+      this.current_page = currentPage;
+      this.updateSource();
     },
     handleSortChange: function (sort) {
-      this.sort = {}
+      this.sort = {};
       try {
-        this.sort[sort.column.label.toLowerCase()] = sort.column.order === 'ascending'
+        this.sort[sort.column.label.toLowerCase()] = sort.column.order === 'ascending';
       } catch (e) {
       }
-      this.updateSource()
+      this.updateSource();
     },
     handleSizeChange: function (size) {
-      let currentItem = (this.current_page - 1) * this.page_size
-      this.page_size = size
-      console.log(`current page: ${this.current_page}`)
-      this.current_page = Math.floor(currentItem / size) + 1
-      console.log(`current item: ${currentItem}`)
-      console.log(`size: ${size}`)
-      this.updateSource()
+      let currentItem = (this.current_page - 1) * this.page_size;
+      this.page_size = size;
+      console.log(`current page: ${this.current_page}`);
+      this.current_page = Math.floor(currentItem / size) + 1;
+      console.log(`current item: ${currentItem}`);
+      console.log(`size: ${size}`);
+      this.updateSource();
     }
   },
   created: function () {
-    this.updateSource()
+    this.updateSource();
   },
   watch: {
     filter: function () {
-      this.updateSource()
+      this.updateSource();
     }
   }
-}
+};
 </script>
-
-<style scoped>
-@import url("//unpkg.com/element-ui@2.3.5/lib/theme-chalk/index.css");
-</style>
