@@ -40,7 +40,7 @@ Vue.mixin({
   data: function () {
     return {
       get baseUrl () {
-        return 'http://192.168.13.45:8888';
+        return process.env.API_URL;
       }
     };
   }
